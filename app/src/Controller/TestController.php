@@ -1,37 +1,39 @@
 <?php
 /**
- * Hello World controller.
+ * Test controller.
  */
 
 namespace App\Controller;
 
+use App\Repository\TestRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * Class HelloWorldController.
+ * Class TestController.
+ *
+ * @Route("/test")
  */
-class HelloWorldController extends AbstractController
+class TestController extends AbstractController
 {
     /**
      * Index action.
      *
-     * @param string $name User input
+     * @param \App\Repository\TestRepository $repository Repository
      *
      * @return \Symfony\Component\HttpFoundation\Response HTTP response
      *
      * @Route(
-     *     "/hello/{name}",
-     *     defaults={"name":"World"},
-     *     requirements={"name": "[a-zA-Z]+"},
+     *     "/",
+     *     name="test_index"
      * )
      */
-    public function index(string $name): Response
+    public function index(TestRepository $repository): Response
     {
         return $this->render(
-            'hello-world/index.html.twig',
-            ['name' => $name]
+            'test/index.html.twig',
+            ['data' => $repository->findAll()]
         );
     }
 }
